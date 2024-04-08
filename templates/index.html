@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Wikipedia for anything!</title>
+    <script src="https://unpkg.com/htmx.org@1.7.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+    <h1>Wikipedia for anything👀</h1>
+    <form hx-post="/generate" hx-target="#output" >
+        <label for="topic">Enter a topic:</label>
+        <input type="text" id="topic" name="topic" required>
+        <button type="submit">Generate</button>
+        <p class='htmx-indicator'>loading...</p>
+    </form>
+    <div id="output"></div>
+
+</body>
+</html>
