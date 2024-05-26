@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Wikipedia for anything👀</title>
+  <script src="https://unpkg.com/htmx.org@1.7.0"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+  <h2>Wikipedia for anything👀</h2>
+  <div>
+    {{ generated_content|safe }}
+  </div>
+  <br>
+  <a href="/" hx-get="/" hx-target="body" hx-push-url="true">Back to Main Page</a>
+</body>
+</html>
