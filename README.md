@@ -10,7 +10,7 @@ Activate by ->
 source venv/bin/activate  
 ```
 
-Install dependencies
+Install dependencies using pip
 
 ```
 pip install -r requirements.txt
