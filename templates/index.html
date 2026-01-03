@@ -1,19 +1,180 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Wikipedia for anything!</title>
-    <script src="https://unpkg.com/htmx.org@1.7.0"></script>
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WikiAnything</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #fff;
+            color: #202122;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        a {
+            color: #3366cc;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .main-page {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .logo-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .wordmark {
+            font-family: 'Linux Libertine', 'Georgia', 'Times', serif;
+            font-size: 2.4em;
+            font-weight: normal;
+            margin-bottom: 4px;
+        }
+        .tagline {
+            font-size: 0.95em;
+            color: #54595d;
+            font-style: italic;
+        }
+        .search-container {
+            width: 100%;
+            max-width: 500px;
+            margin: 24px 0;
+        }
+        .search-box {
+            display: flex;
+            border: 1px solid #a2a9b1;
+            border-radius: 2px;
+            background: #fff;
+        }
+        .search-box:focus-within {
+            border-color: #3366cc;
+            box-shadow: inset 0 0 0 1px #3366cc;
+        }
+        .search-input {
+            flex: 1;
+            padding: 8px 12px;
+            font-size: 14px;
+            border: none;
+            outline: none;
+            background: transparent;
+        }
+        .search-btn {
+            padding: 8px 16px;
+            background: #3366cc;
+            color: #fff;
+            border: none;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+        }
+        .search-btn:hover {
+            background: #2a4b8d;
+        }
+        .topic-links {
+            margin-top: 30px;
+            text-align: center;
+        }
+        .topic-links p {
+            font-size: 13px;
+            color: #54595d;
+            margin-bottom: 10px;
+        }
+        .topic-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px 16px;
+            max-width: 600px;
+        }
+        .topic-list a {
+            font-size: 14px;
+        }
+        .footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 12px;
+            color: #72777d;
+            border-top: 1px solid #eaecf0;
+        }
+        .notice {
+            max-width: 500px;
+            margin: 0 auto 20px;
+            padding: 12px 16px;
+            background: #eaf3ff;
+            border: 1px solid #3366cc;
+            border-radius: 2px;
+            font-size: 13px;
+            color: #202122;
+        }
+    </style>
 </head>
 <body>
-    <h1>Wikipedia for anything👀</h1>
-    <form hx-post="/generate" hx-target="#output" >
-        <label for="topic">Enter a topic:</label>
-        <input type="text" id="topic" name="topic" required>
-        <button type="submit">Generate</button>
-        <p class='htmx-indicator'>loading...</p>
-    </form>
-    <div id="output"></div>
+    <div class="main-page">
+        <div class="logo-container">
+            <div class="wordmark">WikiAnything</div>
+            <div class="tagline">The encyclopedia that writes itself</div>
+        </div>
 
+        <div class="notice">
+            Search for any topic. Articles are generated on-demand and include links to explore related subjects.
+        </div>
+
+        <div class="search-container">
+            <form id="searchForm" class="search-box">
+                <input
+                    type="text"
+                    name="topic"
+                    id="topicInput"
+                    class="search-input"
+                    placeholder="Search WikiAnything"
+                    autocomplete="off"
+                    required
+                >
+                <button type="submit" class="search-btn">Search</button>
+            </form>
+        </div>
+
+        <div class="topic-links">
+            <p>Or explore:</p>
+            <div class="topic-list">
+                <a href="/wiki/Artificial_Intelligence">Artificial intelligence</a>
+                <a href="/wiki/The_Roman_Empire">Roman Empire</a>
+                <a href="/wiki/Black_Holes">Black holes</a>
+                <a href="/wiki/World_War_II">World War II</a>
+                <a href="/wiki/Quantum_Mechanics">Quantum mechanics</a>
+                <a href="/wiki/Climate_Change">Climate change</a>
+                <a href="/wiki/The_Renaissance">The Renaissance</a>
+                <a href="/wiki/DNA">DNA</a>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        Articles are AI-generated and may contain inaccuracies.
+    </footer>
+
+    <script>
+        document.getElementById('searchForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const topic = document.getElementById('topicInput').value.trim();
+            if (topic) {
+                const urlTopic = topic.replace(/\s+/g, '_');
+                window.location.href = `/wiki/${encodeURIComponent(urlTopic)}`;
+            }
+        });
+    </script>
 </body>
 </html>
